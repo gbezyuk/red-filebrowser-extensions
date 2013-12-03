@@ -1,5 +1,5 @@
-# django imports
 from django import forms
+
 
 class ImageCropDataForm(forms.Form):
     version = forms.CharField(max_length=255, widget=forms.HiddenInput)
