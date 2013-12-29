@@ -11,7 +11,7 @@ from filebrowser import sites
 from filebrowser.base import FileObject
 from filebrowser import functions
 from filebrowser import settings as fb_settings
-
+from filebrowser.settings import VERSIONS
 from forms import ImageCropDataForm
 
 class CropFileBrowserSite(sites.FileBrowserSite):
@@ -53,7 +53,11 @@ class CropFileBrowserSite(sites.FileBrowserSite):
         try:
             f = self.storage.open(org_path)
             im = Image.open(f)
-            version_path = functions.get_version_path(org_path, version, site=self)
+            try:
+                version_path = functions.get_version_path(org_path, version, site=self)
+            except AttributeError: # modern filebrowser
+                from filebrowser.base import FileObject
+                version_path = FileObject(org_path).version_path(version)
             root, ext = os.path.splitext(version_path)
             size_args.update({
                 'width' : VERSIONS[version].get('width'),
