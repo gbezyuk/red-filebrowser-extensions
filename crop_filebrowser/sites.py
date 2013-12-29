@@ -2,11 +2,11 @@ import tempfile
 import urllib
 
 from PIL import ImageFile
-
+from django.conf import settings
 from django.shortcuts import render_to_response, HttpResponse, Http404
 from django.template import RequestContext as Context
 from django.http import HttpResponseRedirect, Http404
-
+import os
 from filebrowser import sites
 from filebrowser.base import FileObject
 from filebrowser import functions
@@ -17,7 +17,7 @@ from forms import ImageCropDataForm
 class CropFileBrowserSite(sites.FileBrowserSite):
 
     def get_urls(self):
-        from django.conf.urls.defaults import patterns, url, include
+        from django.conf.urls import patterns, url, include
 
         urlpatterns = super(CropFileBrowserSite, self).get_urls()
 
