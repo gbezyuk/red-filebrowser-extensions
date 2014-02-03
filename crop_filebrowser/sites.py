@@ -13,6 +13,9 @@ from filebrowser import functions
 from filebrowser import settings as fb_settings
 from filebrowser.settings import VERSIONS
 from forms import ImageCropDataForm
+from filebrowser.sites import filebrowser_view
+from filebrowser.decorators import file_exists, path_exists
+
 
 class CropFileBrowserSite(sites.FileBrowserSite):
 
@@ -22,7 +25,7 @@ class CropFileBrowserSite(sites.FileBrowserSite):
         urlpatterns = super(CropFileBrowserSite, self).get_urls()
 
         urlpatterns += patterns('',
-            url(r'^crop/$', self.filebrowser_view(self.crop), name="fb_crop"),
+            url(r'^crop/$', file_exists(self, path_exists(self, filebrowser_view(self.crop))), name="fb_crop"),
         )
 
         return urlpatterns
